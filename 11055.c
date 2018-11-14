@@ -2,37 +2,36 @@
 #include <stdlib.h>
 
 int N;
-int* number;
-int* DP;
 
-int len_max;
-int len;
+int* number;
+int* dp;
+
+int sum;
+int sum_max;
+
 int main() {
 
 	scanf("%d", &N);
 	number = (int*)malloc(sizeof(int) * N);
-	DP = (int*)malloc(sizeof(int) * N);
+	dp = (int*)malloc(sizeof(int) * N);
 
 	for (int i = 0; i < N; i++) {
 		scanf("%d", &number[i]);
-		DP[i] = 0;
+		dp[i] = 0;
 	}
 
 	for (int i = 0; i < N; i++) {
-		len = 0;
+		sum = 0;
 		for (int j = 0; j < i; j++) {
-			if (number[i] < number[j]) {
-				if (len < DP[j])
-					len = DP[j];
+			if (number[i] > number[j]) {
+				if (sum < dp[j])
+					sum = dp[j];
 			}
 		}
 
-		DP[i] = len + 1;
-		
-		len_max = len_max < DP[i] ? DP[i] : len_max;
+		dp[i] = sum + number[i];
+		sum_max = sum_max < dp[i] ? dp[i] : sum_max;
 	}
-
-	printf("%d\n", len_max);
-
+	printf("%d\n", sum_max);
 	return 0;
 }
