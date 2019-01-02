@@ -34,7 +34,7 @@ int main(void)
 			}
 		}
 		
-		//N-K부터 N-1까지 K개의 숫자 문제에서 주어진 
+		//N-K부터 N-1까지 K개의 숫자 문제에서 주어진 연산실행
 		for (int i = N - K; i < N; i++) {
 			ans = (ans + array[i]) / 2;
 		}
