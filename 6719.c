@@ -22,7 +22,8 @@ int main(void)
 		for (int i = 0; i < N; i++) {
 			scanf("%d", &array[i]);
 		}
-
+		
+		// arrayë°°ì—´ bubble sort
 		for (int i = 0; i < N - 1; i++) {
 			for (int j = 0; j < N - 1 - i; j++) {
 				if (array[j] > array[j + 1]) {
@@ -32,7 +33,8 @@ int main(void)
 				}
 			}
 		}
-
+		
+		//N-Kë¶€í„° N-1ê¹Œì§€ Kê°œì˜ ìˆ«ì 
 		for (int i = N - K; i < N; i++) {
 			ans = (ans + array[i]) / 2;
 		}
@@ -40,5 +42,5 @@ int main(void)
 		free(array);
 		printf("#%d %lf\n", test_case, ans);
 	}
-	return 0; //Á¤»óÁ¾·á½Ã ¹İµå½Ã 0À» ¸®ÅÏÇØ¾ß ÇÕ´Ï´Ù.
+	return 0; //ì •ìƒì¢…ë£Œì‹œ ë°˜ë“œì‹œ 0ì„ ë¦¬í„´í•´ì•¼ í•©ë‹ˆë‹¤.
 }
