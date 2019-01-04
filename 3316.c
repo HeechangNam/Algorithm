@@ -1,68 +1,53 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
+  
+int dp[10001][16];
+  
 int main(void)
 {
-	int test_case;
-	int T;
-	
-	freopen("input.txt", "r", stdin);
-	setbuf(stdout, NULL);
-	scanf("%d", &T);
-
-	for (test_case = 1; test_case <= T; ++test_case)
-	{
-		char str[10000];
-		bool yeday[4] = { true,true,true,true };
-		bool today[4] = { true,false,false,false };
-		int mask;
-		int ans = 1;
-		int temp = 1;
-		int except = 0;
-
-		scanf("%s", &str);
-		for (int i = 0; i < strlen(str); i++) {
-			today[str[i] - 'A'] = true;
-			
-			temp = 1;
-			for (int j = 0; j < 4; j++) {
-				if (today[j] == false)
-					temp *= 2;
-			}
-
-			if (i != 0) {
-				mask = 0;
-				for (int j = 0; j < 4; j++) {
-					if (yeday[j] == true && yeday[j] == today[j])
-						break;
-					if (!(yeday[j] || today[j]))
-						mask++;
-				}
-
-				switch (mask) {
-				case 0:
-					except = 0;
-					break;
-				case 1:
-					except = 3;
-					break;
-				case 2:
-					except = 9;
-					break;
-				}
-			}
-
-			for (int j = 0; j < 4; j++) {
-				yeday[j] = today[j];
-				today[j] = false;
-			}
-			ans *= temp;
-			ans -= except;
-		}
-		printf("#%d %d\n", test_case, ans % 1000000007);
-
-	}
-	return 0; //Á¤»óÁ¾·á½Ã ¹Ýµå½Ã 0À» ¸®ÅÏÇØ¾ß ÇÕ´Ï´Ù.
+    int test_case;
+    int T;
+  
+    setbuf(stdout, NULL);
+    scanf("%d", &T);
+  
+    for (test_case = 1; test_case <= T; ++test_case)
+    {
+        char str[10001];
+        int day = 1;
+        int result = 0;
+          
+        scanf("%s", str);
+          
+        for (int i=0; i<10001; i++) {
+            for (int j=0; j<16; j++) {
+                dp[i][j] = 0;
+            }
+        }
+          
+        dp[0][1] = 1;
+          
+        while (str[day-1] != '\0') {
+            int director = 1 << (str[day-1] - 'A');
+              
+            for (int i=1; i<16; i++) {
+                for (int j=1; j<16; j++) {
+                    if ((i & director) > 0 && (i & j) > 0) {    //director and key
+                        dp[day][i] += dp[day-1][j];
+                        dp[day][i] %= 1000000007;
+                    }
+                }
+            }
+              
+            day += 1;
+        }
+          
+        for (int i=1; i<16; i++) {
+            result += dp[day-1][i];
+            result %= 1000000007;
+        }
+          
+        printf("#%d %d\n", test_case, result);
+    }
+      
+    return 0; //ì •ìƒì¢…ë£Œì‹œ ë°˜ë“œì‹œ 0ì„ ë¦¬í„´í•´ì•¼ í•©ë‹ˆë‹¤.
 }
